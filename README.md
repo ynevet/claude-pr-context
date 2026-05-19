@@ -39,20 +39,20 @@ Every PR opened with `/pr` includes an **AI Session Context** section:
 ```bash
 mkdir -p ~/.claude/commands
 curl -o ~/.claude/commands/pr.md \
-  https://raw.githubusercontent.com/yair-n/claude-pr-context/main/commands/pr.md
+  https://raw.githubusercontent.com/ynevet/claude-pr-context/main/commands/pr.md
 ```
 
 **Windows (PowerShell)**
 ```powershell
 New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\commands"
 Invoke-WebRequest `
-  -Uri "https://raw.githubusercontent.com/yair-n/claude-pr-context/main/commands/pr.md" `
+  -Uri "https://raw.githubusercontent.com/ynevet/claude-pr-context/main/commands/pr.md" `
   -OutFile "$env:USERPROFILE\.claude\commands\pr.md"
 ```
 
 **Or clone and copy**
 ```bash
-git clone https://github.com/yair-n/claude-pr-context
+git clone https://github.com/ynevet/claude-pr-context
 cp claude-pr-context/commands/pr.md ~/.claude/commands/pr.md
 ```
 
