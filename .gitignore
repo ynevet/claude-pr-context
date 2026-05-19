@@ -1,0 +1,6 @@
+# Session logs contain verbatim prompts — never commit these
+.claude/session-logs/
+
+# OS
+.DS_Store
+Thumbs.db
