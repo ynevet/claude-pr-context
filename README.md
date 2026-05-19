@@ -37,17 +37,12 @@ Every PR opened with `/pr` includes an **AI Session Context** section:
 
 **macOS / Linux**
 ```bash
-mkdir -p ~/.claude/commands
-curl -o ~/.claude/commands/pr.md \
-  https://raw.githubusercontent.com/ynevet/claude-pr-context/main/commands/pr.md
+curl -fsSL https://raw.githubusercontent.com/ynevet/claude-pr-context/master/install.sh | bash
 ```
 
 **Windows (PowerShell)**
 ```powershell
-New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\commands"
-Invoke-WebRequest `
-  -Uri "https://raw.githubusercontent.com/ynevet/claude-pr-context/main/commands/pr.md" `
-  -OutFile "$env:USERPROFILE\.claude\commands\pr.md"
+irm https://raw.githubusercontent.com/ynevet/claude-pr-context/master/install.ps1 | iex
 ```
 
 **Or clone and copy**
