@@ -4,7 +4,7 @@ A [Claude Code](https://claude.ai/claude-code) custom command that creates GitHu
 
 ## What reviewers get
 
-Every PR opened with `/pr` includes an **AI Session Context** section:
+Every PR opened with `/create-pr` includes an **AI Session Context** section:
 
 ```
 ## AI Session Context
@@ -48,7 +48,7 @@ irm https://raw.githubusercontent.com/ynevet/claude-pr-context/master/install.ps
 **Or clone and copy**
 ```bash
 git clone https://github.com/ynevet/claude-pr-context
-cp claude-pr-context/commands/pr.md ~/.claude/commands/pr.md
+cp claude-pr-context/commands/create-pr.md ~/.claude/commands/create-pr.md
 ```
 
 ## Share with your team
@@ -57,29 +57,35 @@ Commit the command file into your repo so teammates get it automatically:
 
 ```bash
 mkdir -p .claude/commands
-cp ~/.claude/commands/pr.md .claude/commands/pr.md
-git add .claude/commands/pr.md
-git commit -m "add /pr command with AI session context"
+cp ~/.claude/commands/create-pr.md .claude/commands/create-pr.md
+git add .claude/commands/create-pr.md
+git commit -m "add /create-pr command with AI session context"
 ```
 
-Anyone who clones the repo can then use `/pr` — on macOS or Windows.
+Anyone who clones the repo can then use `/create-pr` — on macOS or Windows.
 
 ## Usage
 
 ```
-/pr
+/create-pr
+```
+
+Preview without creating the PR — builds the title and body, prints them, and stops:
+
+```
+/create-pr --dry-run
 ```
 
 Supports any `gh pr create` flags as arguments:
 
 ```
-/pr --base develop
-/pr --draft
+/create-pr --base develop
+/create-pr --draft
 ```
 
 ## How it works
 
-The `/pr` command runs inside Claude Code's context window, so Claude has access to the full conversation history of the current session. It extracts key prompts verbatim, surfaces non-obvious decisions and their rationale, lists files touched in order, and notes any iterations or pivots — then calls `gh pr create` with the enriched description.
+The `/create-pr` command runs inside Claude Code's context window, so Claude has access to the full conversation history of the current session. It extracts key prompts verbatim, surfaces non-obvious decisions and their rationale, lists files touched in order, and notes any iterations or pivots — then calls `gh pr create` with the enriched description.
 
 > **Note:** Context is scoped to the current session. If work spanned multiple sessions, only the current session's context will be captured.
 

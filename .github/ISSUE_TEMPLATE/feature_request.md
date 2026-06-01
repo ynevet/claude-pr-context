@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an improvement to the /pr command
+about: Suggest an improvement to the /create-pr command
 labels: enhancement
 ---
 
