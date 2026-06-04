@@ -11,7 +11,12 @@ Inspect the arguments for a mode flag before doing anything else:
 - **`--dry-run` / `--preview`**: Run Steps 0–3 normally (preflight, understand the changes, extract session context, build the title and body), then **stop**. Instead of creating the PR, print the full title and the rendered body to the user for review — do NOT run `gh pr create`. End by noting they can re-run without the flag to create it for real.
 - **No mode flag** (default): Run all steps, including Step 4, to create the PR.
 
-Strip `--dry-run` / `--preview` out before passing the remaining arguments through to `gh pr create`. Every other flag (e.g. `--draft`, `--base`, `--reviewer`) passes through untouched (see Notes).
+Two more flags are consumed by this command (never passed to `gh pr create`):
+
+- **`--spec <path | JIRA-KEY | #issue>`**: Explicitly sets the spec source for Step 2.5 — a file path, a Jira key like `PROJ-123`, or a GitHub issue like `#42`. Skips spec auto-discovery.
+- **`--no-gaps`**: Skip Step 2.5 entirely and omit the "Spec Gap Analysis" section from the body.
+
+Strip `--dry-run` / `--preview` / `--spec <value>` / `--no-gaps` out before passing the remaining arguments through to `gh pr create`. Every other flag (e.g. `--draft`, `--base`, `--reviewer`) passes through untouched (see Notes).
 
 ## Step 0 — Preflight checks
 
