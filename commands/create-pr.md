@@ -103,6 +103,17 @@ Generate a title (under 70 chars, conventional commits style: `fix:`, `feat:`, `
 
 **Iterations:** <what changed between attempts, or "none">
 
+## Spec Gap Analysis
+
+**Spec source(s):** <comma-separated, e.g. `PROJ-123 (Jira), docs/specs/auth-design.md` — or "No formal spec found — analyzed against session prompts">
+
+| Category | Gap | Details |
+|----------|-----|---------|
+| <Missing/Deviated/Extra/Partial> | <short name> | <what diverged + where in the spec> |
+
+<if no divergences were found, replace the table with:>
+No divergences detected — reviewer should still verify against <source(s)>.
+
 ## Test plan
 - [ ] <item>
 - [ ] <item>
