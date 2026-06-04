@@ -45,6 +45,38 @@ Look back through the entire current conversation and extract:
 - **Files touched**: Files read, created, or modified — in the order they were worked on.
 - **Iterations**: Pivots, revisions, or "actually do it this way" moments. If none, say so.
 
+## Step 2.5 — Spec gap analysis
+
+> Skip this step entirely if `--no-gaps` was passed, and omit the "Spec Gap Analysis" section from the body.
+
+Compare what the code on the branch actually does against the spec it was built from, so the reviewer knows exactly where to push back, comment, or reject.
+
+### Find the spec source(s)
+
+If `--spec <value>` was passed, use only that source and skip auto-discovery. Otherwise check all of the following and use **every formal source you find** (typically 0–2), attributing each in the output:
+
+1. **Plan/spec `.md` files** — design docs or implementation plans created or referenced in this session (e.g. `docs/specs/*.md`, `docs/superpowers/specs/*.md`), and the approved plan if this session used plan mode.
+2. **Jira ticket** — look for a key (e.g. `PROJ-123`) in the branch name, commit messages, or the conversation. If found and Jira tools (e.g. an Atlassian MCP server) are available, fetch the issue's description and acceptance criteria. If a key is found but no Jira tools are connected, ask the user to paste the ticket text; if they decline, list the ticket in the output as "detected but not fetched".
+3. **GitHub issue** — look for `#N` / `fixes #N` / `closes #N` in the branch name, commit messages, or conversation, and fetch it with `gh issue view <N>`.
+4. **Fallback — session prompts**: if no formal source exists, the user's own prompts in this conversation are the implicit spec. The output must state both that no formal spec was found *and* that the analysis ran against session prompts.
+
+### Compare spec vs. diff — grounding rules
+
+You wrote this code, so you are grading your own homework. Guard against the two failure modes — bias toward "no gaps", and analyzing from memory instead of artifacts:
+
+- **Freshly read the actual spec text.** Read the `.md` file contents with the Read tool; use the fetched ticket description verbatim. Never rely on the conversation's memory of what the spec said.
+- **Compare against the actual Step-1 diff** — what the code does, not what the session says was done.
+- **Hunt for divergences.** Go item by item through the spec and check each one against the diff. "No divergences" must be earned by this pass, never assumed.
+
+Classify each divergence found:
+
+| Category | Meaning |
+|----------|---------|
+| Missing  | In the spec, not in the code |
+| Deviated | Implemented differently than specified — note why, if the session shows the reason |
+| Extra    | In the code, not in the spec — scope creep; flag for reviewer attention |
+| Partial  | Started but incomplete (e.g. happy path done, error handling skipped) |
+
 ## Step 3 — Build the PR
 
 Generate a title (under 70 chars, conventional commits style: `fix:`, `feat:`, `refactor:`, etc.) and body using this exact structure:
