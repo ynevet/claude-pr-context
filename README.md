@@ -28,6 +28,25 @@ Every PR opened with `/create-pr` includes an **AI Session Context** section:
 **Iterations:** Initial impl used sync.Map, revised to Redis after user clarified persistence requirement
 ```
 
+## Spec Gap Analysis
+
+Every PR also includes a **Spec Gap Analysis** — the command finds the spec the work was built from (a design/plan `.md` from the session, a Jira ticket detected from the branch name, a linked GitHub issue, or — if nothing formal exists — the session prompts themselves), re-reads it, and compares it against the actual branch diff:
+
+```
+## Spec Gap Analysis
+
+**Spec source(s):** PROJ-123 (Jira), docs/specs/auth-design.md
+
+| Category | Gap | Details |
+|----------|-----|---------|
+| Missing  | Rate limiting on retry | Spec §3 requires backoff; not in diff |
+| Deviated | Redis instead of in-memory | User approved mid-session |
+| Extra    | Added /health endpoint | Not in spec — flag for review |
+| Partial  | Error handling | Happy path only; timeout case unhandled |
+```
+
+Gaps are framed as potential divergences for the reviewer to verify — so the reviewer knows exactly where to comment or push back.
+
 ## Requirements
 
 - [Claude Code](https://claude.ai/claude-code)
@@ -74,6 +93,14 @@ Preview without creating the PR — builds the title and body, prints them, and 
 
 ```
 /create-pr --dry-run
+```
+
+Point the gap analysis at a specific spec, or skip it:
+
+```
+/create-pr --spec docs/specs/auth-design.md
+/create-pr --spec PROJ-123
+/create-pr --no-gaps
 ```
 
 Supports any `gh pr create` flags as arguments:
