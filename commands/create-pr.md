@@ -8,7 +8,7 @@ Create a GitHub Pull Request for the current branch. Your output must include bo
 
 Inspect the arguments for a mode flag before doing anything else:
 
-- **`--dry-run` / `--preview`**: Run Steps 0–3 normally (preflight, understand the changes, extract session context, build the title and body), then **stop**. Instead of creating the PR, print the full title and the rendered body to the user for review — do NOT run `gh pr create`. End by noting they can re-run without the flag to create it for real.
+- **`--dry-run` / `--preview`**: Run Steps 0–3 normally (preflight, understand the changes, extract session context, run the spec gap analysis, build the title and body), then **stop**. Instead of creating the PR, print the full title and the rendered body to the user for review — do NOT run `gh pr create`. End by noting they can re-run without the flag to create it for real.
 - **No mode flag** (default): Run all steps, including Step 4, to create the PR.
 
 Two more flags are consumed by this command (never passed to `gh pr create`):
@@ -53,7 +53,7 @@ Compare what the code on the branch actually does against the spec it was built 
 
 ### Find the spec source(s)
 
-If `--spec <value>` was passed, use only that source and skip auto-discovery. Otherwise check all of the following and use **every formal source you find** (typically 0–2), attributing each in the output:
+If `--spec <value>` was passed, use only that source and skip auto-discovery — fetch it using the mechanism of the matching category below (file path → read it, Jira key → category 2, `#issue` → category 3). Otherwise check all of the following and use **every formal source you find** (typically 0–2), attributing each in the output:
 
 1. **Plan/spec `.md` files** — design docs or implementation plans created or referenced in this session (e.g. `docs/specs/*.md`, `docs/superpowers/specs/*.md`), and the approved plan if this session used plan mode.
 2. **Jira ticket** — look for a key (e.g. `PROJ-123`) in the branch name, commit messages, or the conversation. If found and Jira tools (e.g. an Atlassian MCP server) are available, fetch the issue's description and acceptance criteria. If a key is found but no Jira tools are connected, ask the user to paste the ticket text; if they decline, list the ticket in the output as "detected but not fetched".
