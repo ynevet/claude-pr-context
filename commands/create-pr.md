@@ -137,7 +137,8 @@ EOF
 
 ## Notes
 
-- If the user provides arguments (e.g. `/create-pr --base develop` or `/create-pr --draft`), pass them through to `gh pr create` — only `--dry-run` / `--preview` are consumed as modes.
+- If the user provides arguments (e.g. `/create-pr --base develop` or `/create-pr --draft`), pass them through to `gh pr create` — only `--dry-run` / `--preview` / `--spec <value>` / `--no-gaps` are consumed by this command.
+- The Spec Gap Analysis is informational only — it never blocks PR creation. Frame gaps as potential divergences for the reviewer to verify; never assert an authoritative "matches spec".
 - The AI Session Context section exists for reviewers who want to understand the AI-assisted workflow — be thorough and honest. A reviewer should be able to reconstruct the intent and key moments of the session from this section alone.
 - If the session was short and straightforward, say so. Don't invent decisions or iterations.
 - Confirm the PR URL at the end.
